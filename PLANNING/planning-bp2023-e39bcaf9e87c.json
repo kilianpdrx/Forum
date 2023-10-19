@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "planning-bp2023",
+  "private_key_id": "e39bcaf9e87ce014172365ee70e5c15662474442",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDER+SpVHciqwnC\nhDFL5N4/reBMkH3Ky1gwRMgnJesqPICLo887uTCYoalJERrrDDgi/7KOJnpZpRyE\nIvKX9VvhP0/SpvmlD8lCxMW0kFIj2A05vL4kjSTtDKwhK44llYYe7IzHXMYFo69S\nqXXBFaulB0C3LejZOedPvYPZ6BOvRszc7MXeiCYb/nnrJh0PdJGzrhNz8tRVOvnH\nzWtF1xVpReJSYpDqjC63CKsMOuUAun9i6Uy1JqRQcgyr6x+fYm7djzfavM9CIhTo\n442lLREaYCDB0kixO7rFVlLqhFF6llwWgcgCBV2td68CBoCcSor+Qx+/LF4lVFB3\n2NO2vClxAgMBAAECggEAAbdTM3vOktoF+tJnD+/PVaUyidjVkLlYawue6GC3fqYK\nxa3H+RC0cREwxrfEkXuI3h14NS/27+O2rR0VG+kERaLlEsVs91l8+/12cQ61+SRB\ncVjKHM2zHfN3ac7UrlVxV8HftTqFbLUyqjlbEzYaSxYWJcPb/lI4SIUyquwRh/3F\njg8bsosxlCGvcRYPY9yjih8JYU0LxJcqOnv5WdKFqoGFKsYSAXURRCcclMg6Ho5S\n4dH4q+BQ86eFAORcy+gY+fMBSr02rIlENpawRtMx1jsSKr/e9MczFxmk8GWnxl0U\nTJOzWF9Mt7QQCfA2cUq7mrlsdNavf8sk0ksRAqLPMQKBgQDrmENUfVcmcJOzEPxT\nKbPUbathuuyecxBxz4c4pvJhN7vf2ddfmr7bXtX6IC6CoPFfehIinxgcYFnAPs7e\nOM9S9Vo7SjRFiwzt1kKeBzw8pPeZwnrPT75wC/3Z5/6ZCNzAJy7wxaHHz8Qsurvo\n7vNDvJAGx9QzgbIfIy/WT4XtnQKBgQDVR/CWngA+90ATzIkvWXQpf9VYqhcoMisP\nDS6XrpZM+g5mapZ14PhW0f9uZoym07+L9sF/7zF0vWYwiuFruUZRDUwcZk+dCcMP\nAwkYCzBsK7ty+RHoyJ/Aiajfv7AWQfxUKIKuGbMSES2XuRsQhtcZ7bGtLVcfQYDb\nWvcKC7RM5QKBgECRHTrFkyHkzoXPzOdZ0YARglupZ/nQ3Rvj3VJIZrsAFEw4Ho+E\nEHR8nDYNpdGFHEGnadr1MR1txosqa3V5qlA5D76aCpNYlXWFOAKpRvfz2ivYoeG5\nIB8DGlIjA6KbTCyZUIMKFtl09nWvw5oGCsNwpSRGlcB79f4UnaKlbrX9AoGAI02l\nJUlCASosERrqGkxUTgo65lJBQwYK2pL0A2eCuXsqpwk9noV+leBsx3lyDqs+KYzO\nur59ETXIlIBoj8w7N29cCddlljjncLSv7KrtePpELOPNcxrCVrxyl5bDLuv9OHD8\nMJVQbs0pHtQlBrdLI5+UqXW31hShn62O9rq5PYECgYAI5MwvLz/YNl4GO/k0eZdt\nCCzoUFbCZA7a0oKsfENAcYfj2vD52FM5MRQakeiX7R7yL3D6gJtc/vPwrIoim9nx\n8/fvIlxdwCRyopxzmH4ZrOSVu38y+mY9ktJerR8vvvYlKjJDnQi3xkhzOyyPx1qS\nh+P+DzJ6YymdOzCdGznv0A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "test-leduc-bp-2023@planning-bp2023.iam.gserviceaccount.com",
+  "client_id": "100602790446627214928",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-leduc-bp-2023%40planning-bp2023.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
