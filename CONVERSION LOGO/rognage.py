@@ -41,7 +41,8 @@ for file in files:
 
         # Charger l'image avec Pillow
         img = Image.open(input_path)
-        
+
+        # recadrage de l'image
         cropped_img = img.crop(img.getbbox())
 
         # Enregistrez l'image recadrée dans le répertoire de sortie avec le même nom
