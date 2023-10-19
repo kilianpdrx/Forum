@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<!-- Le badge est fait selon le modèle suivant:
+un container est créé dans lequel on va mettre toutes les autres données. Il y a d'abord une ligne avec 3 images alignées,
+dont celle du milieu vide pour faire un espace. On met ensuite une ligne horizontale en dessous et finalement 2 lignes de texte en bas
+-->
+
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 2px solid rgb(206, 206, 206);
+            padding: 10px;
+            width: 400px;
+            height: 230px;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .column {
+            float: right;
+            width: 33.33%;
+            align-items: center;
+            vertical-align: center;
+
+        }       
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+
+        .image {
+            width: auto;
+            max-width: 230px;
+            height: 60px;
+
+        }
+
+        .horizontal-line {
+            width: 100%;
+            height: 1px;
+            background-color: rgb(20,10,180);
+            margin-top: 5px;
+
+            
+        }
+
+        .line1 { /* Nom et prénom*/
+            font-size: 30px;
+            font-family: 'Monospace';
+            text-align: center;
+            color: rgb(20, 100, 180);
+            padding-top: 22px;
+            padding-bottom: 25px;
+
+        }
+
+        .line2 { /* Role*/
+            font-size: 26px;
+            font-family: serif;
+            text-align: center;
+            color: rgb(17, 92, 170);
+
+        }
+    </style>
+</head>
+<body>
+    <table>
+        {{contenu}} <!-- Le placeholder ou le contenu sera inséré-->
+    </table>
+</body>
+</html>

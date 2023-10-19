@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<!-- Il y a le cadre extérieur du badge, l'image et deux lignes de texte, pour le nom et le rôle-->
+
+<head>
+    <meta charset="utf-8">
+    <style>
+    .rectangle {
+        width: 400px;
+        height: 230px;
+        background-color: white;
+        border: 7px solid rgb(20, 100, 180); /* Badges membres : rgb(251, 0, 6) // badges staffeurs : rgb(20, 100, 180) */
+        text-align: center;
+        line-height: 0.5cm; /* A augmenter pour les noms à rallonge*/
+    }
+
+    .rectangle img {
+        display: block;
+        margin: 0 auto;
+        max-width: 65%;
+        max-height: 80px;
+}
+
+    .line1 {/* Nom et prénom*/
+        font-size: 30px;
+        font-family: 'Monospace';
+        text-align: center;
+        color: rgb(20, 100, 180);
+    }
+
+    .line2 { /* Role*/
+        font-size: 26px;
+        font-family: serif;
+        text-align: center;
+        color: rgb(17, 92, 170)
+    }
+    </style>
+</head>
+<body>
+    <table>
+    {{contenu}} <!-- Le placeholder ou le contenu sera inséré-->
+    </table>
+</body>
+</html>
