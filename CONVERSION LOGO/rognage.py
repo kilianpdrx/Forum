@@ -19,12 +19,17 @@ import os
 # Créez un objet ArgumentParser
 parser = argparse.ArgumentParser(description='Script de recadrage d\'images.')
 
-# Ajoutez des arguments de ligne de commande pour les dossiers d'entrée et de sortie
+# # Ajoutez des arguments de ligne de commande pour les dossiers d'entrée et de sortie
 parser.add_argument('input_dir', type=str, help='Chemin vers le répertoire d\'entrée contenant les fichiers PNG')
 parser.add_argument('output_dir', type=str, help='Chemin vers le répertoire de sortie pour les images recadrées')
 
-# Analysez les arguments de la ligne de commande
+# # Analysez les arguments de la ligne de commande
 args = parser.parse_args()
+
+input_dir="/Users/kilianpouderoux/Desktop/FORUM/LOGO_PNG"
+
+# Chemin vers le répertoire de sortie pour les fichiers PNG
+output_dir="/Users/kilianpouderoux/Desktop/FORUM/LOGO_CROP"
 
 # Vérifiez si le répertoire de sortie existe, sinon, créez-le
 if not os.path.exists(args.output_dir):
@@ -33,6 +38,8 @@ if not os.path.exists(args.output_dir):
 # Liste tous les fichiers dans le répertoire d'entrée
 files = os.listdir(args.input_dir)
 
+problemes = []
+
 # Boucle à travers tous les fichiers du répertoire d'entrée
 for file in files:
     if file.endswith(".png"):  # Assurez-vous que le fichier est une image PNG
@@ -40,16 +47,18 @@ for file in files:
         input_path = os.path.join(args.input_dir, file)
 
         # Charger l'image avec Pillow
-        img = Image.open(input_path)
-        
-        cropped_img = img.crop(img.getbbox())
+        try:
+            img = Image.open(input_path)
+            # recadrage de l'image
+            cropped_img = img.crop(img.getbbox())
+            # Enregistrez l'image recadrée dans le répertoire de sortie avec le même nom
+            output_path = os.path.join(args.output_dir, file)
+            cropped_img.save(output_path)
+        except:
+            problemes.append(file)
 
-        # Enregistrez l'image recadrée dans le répertoire de sortie avec le même nom
-        output_path = os.path.join(args.output_dir, file)
-        cropped_img.save(output_path)
+    else: print("Erreur avec le fichier " + file + "pas le bon format")
 
-        print(f"Image recadrée et enregistrée sous : {output_path}")
-        
-    else: print("Erreur avec le fichier " + file)
-
-print("Toutes les images ont été recadrées et enregistrées.")
+print("Problemes avec les logos suivants : ")
+for elt in problemes:
+    print(elt)

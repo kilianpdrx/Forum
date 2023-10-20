@@ -2,6 +2,7 @@
 # script shell pour automatiser la conversion des logo SVG fournis par les entreprises vers le
 # format PNG pour ensuite les recadrer et finalement faire les badges
 # on utilise la bibliothèque rsvg-convert pour passer de SVG à PNG, elle est installée via homebrew
+# pas oublier de chmod +x et de lancer avec ./Conversion.sh
 
 # Chemin vers le répertoire contenant les fichiers SVG
 input_dir="/Users/kilianpouderoux/Desktop/FORUM/LOGO_SVG"
@@ -36,10 +37,15 @@ done
 # répertoire final où les images converties et rognées seront stockées
 final_dir="/Users/kilianpouderoux/Desktop/FORUM/LOGO_PNG_CROP"
 
+echo  
+echo   
+echo -- lancement script python --
+
 # Appel du script Python
-python /Users/kilianpouderoux/Desktop/FORUM/crop.py "$output_dir" "$final_dir"
+python /Users/kilianpouderoux/Desktop/FORUM/Badges/ROGNAGE/rognage.py "$output_dir" "$final_dir"
 
-echo "Script Python terminé."
+echo -- fin script python --
+echo  
+echo   
 
-
-echo "Conversion terminée."
+echo "Fin du programme"
