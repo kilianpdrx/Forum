@@ -3,4 +3,5 @@ Tous les petits projets que je fais pour le forum
 
 Il y a plusieurs mini projets ici :
 - la génération des badges
-- le rognage des images SVG
+- la conversion des images SVG en PNG et leur rognage
+- le générateur de NDF
