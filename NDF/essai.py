@@ -9,7 +9,6 @@ from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.lib.units import cm
 
-
 def numero_facture(texte):
     
     texte = "FACTURE N° " + texte
@@ -103,7 +102,7 @@ def bas():
     c.drawString(50, 50, texte)
 
 def table_presta(database):
-    table_presta = Table(modif2)
+    table_presta = Table(database)
     style = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.ReportLabLightBlue),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
@@ -119,7 +118,7 @@ def table_presta(database):
     table_presta.wrapOn(c, width, height)
     table_presta.drawOn(c, 50, 360)  # Ajustez ces valeurs selon vos besoins
 
-def table_TVA(database):
+def table_TVA():
     
     prix = [["TOTAL HT", str(total_HT) + " €"],["TVA " + str(taux_TVA) + " %", str(total_TVA)  + " €"],["TOTAL TTC", str(total)  + " €"]]
     
@@ -200,7 +199,7 @@ for index, row in db.iterrows():
     numero_facture(str(num_fact))
     bas()
     table_presta(modif2)
-    table_TVA(modif2)
+    table_TVA()
 
 
     # Sauvegarder le PDF
