@@ -186,7 +186,7 @@ for index, row in db.iterrows():
     c = canvas.Canvas(output_file, pagesize=A4)
     width, height = A4
 
-
+    print(modif2)
 
     # affichage sur le canvas
     titre()
