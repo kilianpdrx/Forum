@@ -9,6 +9,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.units import cm
 from reportlab.platypus import BaseDocTemplate, PageTemplate, Frame
+from PyPDF2 import PdfFileReader, PdfFileWriter
+
 
 # Chargement des données de description
 description_perms = {"Respo Stands Café": """Bien vérifier que tous les stands sont clean, bien ravitaillés. En cas de besoin, appeler ou aller à la cuisine pour le dire au respo 2a ravitaillement""",
@@ -489,9 +491,11 @@ for col in db.columns[1:]:
     
     
     elements.append(PageBreak())
-    chemin_image = "/Users/kilianpouderoux/Documents/Forum/FICHES DE PERM/clemsou.png"  # Remplacez par le chemin de votre image
-    image = Image(chemin_image, width=300, height=300)  # Ajustez les dimensions selon vos besoins
+    chemin_image = "/Users/kilianpouderoux/Documents/Forum/FICHES DE PERM/plan numerote.png"  # Remplacez par le chemin de votre image
+    image = Image(chemin_image, width=550, height=550)  # Ajustez les dimensions selon vos besoins
     elements.append(image)
+    
+    
     
     # Création du PDF
     try:

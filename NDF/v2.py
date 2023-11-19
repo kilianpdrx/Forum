@@ -87,7 +87,6 @@ def milieu():
         c.drawString(50, 620 - 14*i, line)
         i+=1
 
-
 def remarque(texte):
     texte = "Remarque: " + texte
     a = texte.splitlines()
@@ -96,7 +95,6 @@ def remarque(texte):
     for line in a:
         c.drawString(70, 420 - 14*i, line)
         i+=1
-
 
 def bas():
     texte =  "GIE Forum CentraleSupélec, 3 rue Joliot Curie, 91190, Gif-sur-Yvette, Tél : 01 75 31 72 60"
@@ -115,12 +113,12 @@ def table_presta(database):
         ('GRID', (0, 0), (-1, -1), 1, colors.black)
     ])
     table_presta.setStyle(style)
-    colWidths = [10*cm, 3*cm, 3*cm, 3*cm]
+    colWidths = [10*cm, 2*cm, 4*cm, 3*cm]
     table_presta._argW = colWidths
     table_presta.wrapOn(c, width, height)
     table_presta.drawOn(c, 20, 360)  # Ajustez ces valeurs selon vos besoins
 
-def table_TVA():
+def table_TVA(total_HT, total_TVA, total):
     
     prix = [["TOTAL HT", str(total_HT) + " €"],["TOTAL TVA ", str(total_TVA)  + " €"],["TOTAL TTC", str(total)  + " €"]]
     
@@ -161,41 +159,47 @@ except FileNotFoundError:
     quit()
 
 
-
-for index, row in db.iterrows():
-    faire = row["Générer"]
-    if faire == "OUI":
-        
-        # on prend juste les colonnes utiles pour le pdf
-        modif = row[['Prestation', 'Quantite', 'Prix unitaire HT', 'TVA']]
-        texte_remarque = row["Remarque"]
-        num_fact = row["Numero"]
-
-        # récupération des données et calcul des prix à afficher
-        prix_HT = round(int(modif['Prix unitaire HT']),2)
-        taux_TVA = round(float(row["TVA"]),2)
-        quantite = float(row["Quantite"])
-
-        
-        
-        total_HT = round(quantite*prix_HT,2)
-        total_TVA = round(taux_TVA/100*total_HT,2)
-        total = round(total_HT + total_TVA,2)
+grouped_db = db.groupby('Numero')
 
 
-        # on met sous le bon format pour afficher
-        modif['Prix unitaire HT'] = modif['Prix unitaire HT'] + " €"
-        modif['TVA'] = modif['TVA'] + " %"
+for group_name, group_data in grouped_db:
+    num_fact = group_name
+    prestation_data = []
+    texte_remarque = ""
+    destinataire = group_data["Destinataire"].iloc[0]
 
-        modif2 = [modif.index.tolist()] + [modif.values.tolist()]
 
-        # définition du document
+    destinataire = destinataire[0]
+
+    TVA_total = 0
+    prix_total = 0
+    HT_total = 0
+    
+    for index, row in group_data.iterrows():
+        if row["Générer"] == "OUI":
+            prestation_data.append([row['Prestation'], row['Quantite'], row["Prix unitaire HT"], row["TVA"]])
+            
+            texte_remarque = texte_remarque + "\n" + row["Remarque"]
+            prix_HT = round(int(row['Prix unitaire HT']),2)
+            taux_TVA = round(float(row["TVA"]),2)
+            quantite = float(row["Quantite"])
+            
+            TVA_total += round(quantite*prix_HT*taux_TVA/100,2)
+            HT_total += round(quantite*prix_HT,2)
+        elif row["Générer"] == "NON":
+            pass
+        else:
+            print("La valeur de la colonne Générer pour la ligne "+str(index+1)+" doit être OUI ou NON")
+            quit()
+
+        prix_total = TVA_total + HT_total
+    if prestation_data != []:
+        prestation_data.insert(0,['Prestation', 'Quantité', 'Prix unitaire HT €', 'TVA %'])
+
         output_file = str(db["Destinataire"][index]) +"_"+ str(num_fact) + ".pdf"
         c = canvas.Canvas(output_file, pagesize=A4)
         width, height = A4
-
-
-        # affichage sur le canvas
+        
         titre()
         date()
         aff_trucs_legaux()
@@ -203,20 +207,78 @@ for index, row in db.iterrows():
         aff_adresse_gie()
         remarque(texte_remarque)
         milieu()
-        personne(row["Destinataire"], "1 rue Joliot Curie\n91190 Gif-sur-Yvette")
-        numero_facture(str(num_fact))
+        personne(destinataire, "1 rue Joliot Curie\n91190 Gif-sur-Yvette")
+        numero_facture(num_fact)
         bas()
-        table_presta(modif2)
-        table_TVA()
-
-
-        # Sauvegarder le PDF
+        table_presta(prestation_data)
+        table_TVA(HT_total, TVA_total, prix_total)
+        
         try: 
             c.save()
             print("Génération de "+ output_file + " terminée")
         except:
             print("Problème lors de la création du fichier pdf : " + output_file)
-    elif faire == "NON":
-        pass
-    else:
-        print("La valeur de la colonne Générer pour la ligne "+str(index+1)+" doit être OUI ou NON")
+
+
+
+
+# for index, row in db.iterrows():
+#     faire = row["Générer"]
+#     if faire == "OUI":
+        
+#         # on prend juste les colonnes utiles pour le pdf
+#         modif = row[['Prestation', 'Quantite', 'Prix unitaire HT', 'TVA']]
+#         texte_remarque = row["Remarque"]
+#         num_fact = row["Numero"]
+
+#         # récupération des données et calcul des prix à afficher
+#         prix_HT = round(int(modif['Prix unitaire HT']),2)
+#         taux_TVA = round(float(row["TVA"]),2)
+#         quantite = float(row["Quantite"])
+
+        
+        
+#         total_HT = round(quantite*prix_HT,2)
+#         total_TVA = round(taux_TVA/100*total_HT,2)
+#         total = round(total_HT + total_TVA,2)
+
+
+#         # on met sous le bon format pour afficher
+#         modif['Prix unitaire HT'] = modif['Prix unitaire HT'] + " €"
+#         modif['TVA'] = modif['TVA'] + " %"
+
+#         modif2 = [modif.index.tolist()] + [modif.values.tolist()]
+
+#         # définition du document
+#         output_file = str(db["Destinataire"][index]) +"_"+ str(num_fact) + ".pdf"
+#         c = canvas.Canvas(output_file, pagesize=A4)
+#         width, height = A4
+
+
+#         # affichage sur le canvas
+#         titre()
+#         date()
+#         aff_trucs_legaux()
+#         aff_contact_gie()
+#         aff_adresse_gie()
+#         remarque(texte_remarque)
+#         milieu()
+#         personne(row["Destinataire"], "1 rue Joliot Curie\n91190 Gif-sur-Yvette")
+#         numero_facture(str(num_fact))
+#         bas()
+#         table_presta(modif2)
+#         table_TVA()
+
+
+#         # Sauvegarder le PDF
+#         try: 
+#             c.save()
+#             print("Génération de "+ output_file + " terminée")
+#         except:
+#             print("Problème lors de la création du fichier pdf : " + output_file)
+#     elif faire == "NON":
+#         pass
+#     else:
+#         print("La valeur de la colonne Générer pour la ligne "+str(index+1)+" doit être OUI ou NON")
+
+

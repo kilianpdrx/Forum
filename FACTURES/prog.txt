@@ -1,0 +1,92 @@
+// c'est le programme à renseigner dans Apps Script du générateur de factures onglet Factures Stand
+// ça va envoyer un mail à l'adresse mail renseignée, avec la facture dont le lien est marqué
+// ça marque aussi dans une colonne si ça a été envoyé par mail auto, ainsi que la dernière date d'envoi
+
+
+function sendEmailsWithAttachments() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var startRow = 2;  // Commencer à la deuxième ligne, en supposant que la première ligne contient des en-têtes
+  var numRows = sheet.getLastRow() - 1;  // Nombre de lignes de données
+  var numCols = sheet.getLastColumn();
+  var nombreFacturesEnvoyees = 0;
+
+  var cmoi = Session.getActiveUser().getEmail();
+  var usernameWithDot = cmoi.split('@')[0]; // Sépare l'email au niveau de '@' et prend la première partie
+  var username = usernameWithDot.split('.')[0]; // Sépare au niveau du '.' et prend la 1ère partie : le prenom en minuscule sans accent
+
+
+
+  // récupérer la table de données
+  var dataRange = sheet.getRange(startRow, 1, numRows, numCols);
+  var data = dataRange.getValues();
+  var linkColumn = 5; // la colonne des liens des factures
+  var adresseMailColumn = 9; // la colonne des adresses mail
+  var envoyeAutoColumn = 8; // la colonne pour dire si on a envoyé par mail, ici c'est 6 parce que la fonction qui l'utilise indexe à 
+                            //partir de 1
+  var aEnvoyerColumn = 6; // la colonne ou on check si on doit l'envoyer ou pas
+  var prospecteurColumn = 2;
+  var dateEnvoyeAutoColumn = 9;
+  var nomTresorierColumn = 3;
+
+
+  for (var i = 0; i < numRows; i++) {
+    var row = data[i];
+    var emailAddress = row[adresseMailColumn];
+    var lien = row[linkColumn];
+    var nomBoite = row[0];
+    var aEnvoyer = row[aEnvoyerColumn];
+    var tresorier = row[nomTresorierColumn];
+    var prenomTrez = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+
+
+    if (tresorier == 'David'){
+      tresorier = 'David';
+      tresorierMail = 'David ABEHSERA, Vice-Trésorier du Forum CentraleSupélec';
+    } else{
+      if (tresorier == 'Leduc'){
+        tresorierMail ="Antoine LEDUC, Trésorier du Forum CentraleSupélec";
+        tresorier = 'Antoine';
+      }
+    }
+
+
+    if (aEnvoyer == true && prenomTrez == tresorier){
+      if (emailAddress == "" ||  lien == ""){
+        Logger.log("Pas de lien de fichier ou d'adresse mail de destination pour " + nomBoite);
+        
+      } else {
+        
+        var cellEnvoyeAuto = sheet.getRange(i+startRow, envoyeAutoColumn);
+        var cellDateDernierEnvoi = sheet.getRange(i+startRow, dateEnvoyeAutoColumn);
+        var fileId = lien.match(/[-\w]{25,}/); // pour identifier le fichier
+
+        if (fileId) {
+          var file = DriveApp.getFileById(fileId[0]); // récupérer le fichier
+          var subject = '[FCS2023] Facture participation de ' + nomBoite;  // Personnalisez le sujet
+          var body = "Bonjour,\n\n" + "Ceci est un mail automatique.\n\n" +"Votre facture concernant votre participation au Forum CentraleSupélec 2023 est disponible en pièce jointe. Si vous avez choisi des options, la facture sera envoyée par ce même procédé après le Forum.\n\n" + "Afin de faciliter le processus de facturation, merci de bien nous indiquer par mail à l'adresse tresorerie@forum-cs.fr les modalités de paiement (Bon de commande, plateforme dématérialisée ou autre chose propre à votre entreprise).\n\n" + "En vous souhaitant bonne réception,\n\n" + "Bien cordialement, \n\n" + tresorierMail;
+          var copy = row[prospecteurColumn]
+          
+          MailApp.sendEmail({
+            to: emailAddress,
+            subject: subject,
+            body: body,
+            cc: copy,
+            attachments: [file.getAs(MimeType.PDF)]  // Changez le type MIME si nécessaire
+          });
+          nombreFacturesEnvoyees+=1;
+          Logger.log("Mail envoyé à " + nomBoite + " avec la facture " + lien);
+          cellEnvoyeAuto.setValue(true);
+          var now = new Date();
+          cellDateDernierEnvoi.setValue(now);
+          cellDateDernierEnvoi.setNumberFormat("dd/MM/yyyy HH:mm:ss");
+
+
+        } else {
+          Logger.log("Impossible de récupérer le fichier à envoyer pour " + nomBoite);
+        }
+      }
+    }
+  }
+  Logger.log("Nombre total de factures envoyées : " + nombreFacturesEnvoyees);
+}
+
