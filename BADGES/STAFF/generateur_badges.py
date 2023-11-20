@@ -31,7 +31,7 @@ from math import *
 # lecture des données à partir du tableau à 3 colonnes recensant nom, prénom et role des personnes
 
 try:
-    data = pd.read_csv("1A_refaire.csv", sep=';')
+    data = pd.read_csv("coucou.csv", sep=';')
 except FileNotFoundError:
     print("La database est introuvable")
     quit()
@@ -39,6 +39,10 @@ except FileNotFoundError:
 data["prenom"] = data["prenom"].str.capitalize()
 data["nom"] = data["nom"].str.upper()
 data["role"] = data["role"].str.capitalize()
+
+for index, value in data["role"].items():
+    if str(value) == "nan" or str(value) == "-":
+        data.at[index, "role"] = "   "
 
 nom_final = list(data["prenom"] + " " + data["nom"])
 role_final = list(data["role"])
@@ -79,14 +83,14 @@ text_template = """
         <div class="rectangle">
             <p class="line1">{}</p>
             <p class="line2">{}</p>
-            <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_STAFF/logo_BP.png" alt="Be Prepared" style="height: 100px;">
+            <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_STAFF/logo_forum.png" alt="Be Prepared" style="height: 100px;">
         </div>
         </td>
         <td>
         <div class="rectangle">
             <p class="line1">{}</p>
             <p class="line2">{}</p>
-            <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_STAFF/logo_BP.png" alt="Be Prepared" style="height: 100px;">
+            <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_STAFF/logo_forum.png" alt="Be Prepared" style="height: 100px;">
         </div>
         </td>
     </tr>

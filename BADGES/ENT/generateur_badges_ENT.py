@@ -35,19 +35,24 @@ from math import *
 
 # lecture des données à partir du tableau à 3 colonnes recensant nom, prénom et role des personnes
 try:
-    data = pd.read_csv("noms_membres_CSV_ent.csv", sep=';')
+    data = pd.read_excel("go7.xlsx")
 except FileNotFoundError:
     print("La database est introuvable")
     quit()
 
 data["prenom"] = data["prenom"].str.capitalize()
 data["nom"] = data["nom"].str.upper()
+
+for index, value in data["role"].items():
+    if str(value) == "nan" or str(value) == "-":
+        data.at[index, "role"] = "   "
+
 data["role"] = data["role"].str.capitalize()
+
 
 nom_final = list(data["prenom"] + " " + data["nom"])
 role_final = list(data["role"])
 logo_final = list(data["logo"])
-
 
 
 # definition de ce qu'on veut remplacer
@@ -92,7 +97,7 @@ text_template = """
         <div class="container">
             <div class="row">
                 <div class="column">
-                    <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_ENT/logo_BP.png" class="image" style="width: 100% height: auto"> 
+                    <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_ENT/logo_forum.png" class="image" style="width: 100% height: auto"> 
                 </div>
                 <div class="column">
                     <img src="" style="width: 0%" class="image">
@@ -111,7 +116,7 @@ text_template = """
         <div class="container">
             <div class="row">
                 <div class="column">
-                    <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_ENT/logo_BP.png" class="image" style="width: 100% height: aut">
+                    <img src="/Users/kilianpouderoux/Desktop/FORUM/Badges/BADGES_ENT/logo_forum.png" class="image" style="width: 100% height: aut">
                 </div>
                 <div class="column">
                     <img src="" style="width: 0%" class="image">
