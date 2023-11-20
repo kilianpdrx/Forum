@@ -31,7 +31,7 @@ from math import *
 # lecture des données à partir du tableau à 3 colonnes recensant nom, prénom et role des personnes
 
 try:
-    data = pd.read_csv("coucou.csv", sep=';')
+    data = pd.read_excel("coucou.xlsx")
 except FileNotFoundError:
     print("La database est introuvable")
     quit()
