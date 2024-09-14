@@ -531,9 +531,9 @@ for col in db.columns[1:]:
         # Ajouter un espace avant de passer à la page suivante
         
 
-    chemin_image = "/Users/kilianpouderoux/Documents/Forum/FICHES DE PERM/clemsou.png"  # Remplacez par le chemin de votre image
-    image = Image(chemin_image, width=300, height=300)  # Ajustez les dimensions selon vos besoins
-    elements.append(image)
+    # chemin_image = "/Users/kilianpouderoux/Documents/Forum/FICHES DE PERM/clemsou.png"  # Remplacez par le chemin de votre image
+    # image = Image(chemin_image, width=300, height=300)  # Ajustez les dimensions selon vos besoins
+    # elements.append(image)
     
     # Création du PDF
     try:
